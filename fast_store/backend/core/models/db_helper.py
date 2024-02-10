@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from fast_store.core.config import settings
+from fast_store.backend.core.config import settings
 
 
 class DatabaseHelper:

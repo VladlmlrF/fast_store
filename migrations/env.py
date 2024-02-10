@@ -19,8 +19,8 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from fast_store.core.models import metadata
-from fast_store.core.config import settings
+from fast_store.backend.core.models import metadata
+from fast_store.backend.core.config import settings
 
 target_metadata = metadata
 
