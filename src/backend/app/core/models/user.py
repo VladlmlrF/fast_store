@@ -19,8 +19,8 @@ class Role(str, Enum):
 
 
 class User(Base, table=True):
-    username: str = Field(index=True)
-    email: str
+    username: str = Field(unique=True, index=True)
+    email: str = Field(unique=True)
     hashed_password: str
     is_active: bool = Field(default=True)
     role: Role = Field(default=Role.USER)
