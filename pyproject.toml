@@ -13,6 +13,8 @@ psycopg2-binary = "^2.9.9"
 pre-commit = "^3.6.0"
 sqlmodel = "^0.0.14"
 alembic = "^1.13.1"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 
 
 [build-system]
