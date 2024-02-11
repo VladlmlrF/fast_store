@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     algorithm: str = "RS256"
     access_token_expire_minutes: int = 15
 
+    SUPER_ADMIN_PASSWORD: str
+
     model_config = SettingsConfigDict(env_file=".env")
 
     @property
