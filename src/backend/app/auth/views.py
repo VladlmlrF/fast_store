@@ -6,7 +6,7 @@ from fastapi import HTTPException
 from fastapi import Response
 from fastapi import status
 from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel.ext.asyncio.session import AsyncSession
 
 from ..core.models import db_helper
 from .schemas import TokenDataSchema
