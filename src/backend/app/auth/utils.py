@@ -13,13 +13,12 @@ from fastapi.security.utils import get_authorization_scheme_param
 from jose import jwt
 from jose import JWTError
 from passlib.context import CryptContext
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
 from src.backend.app.core.config import settings
 from src.backend.app.core.models import User
-
-# from sqlalchemy import select
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -98,9 +97,19 @@ def decode_access_token(
 
 async def get_user_by_username(session: AsyncSession, username: str) -> User | None:
     """Get user by username"""
-    statement = select(User).where(User.username == username)
-    user: User | None = await session.scalar(statement=statement)
-    return user
+    try:
+        statement = select(User).where(User.username == username)
+        user: User | None = await session.scalar(statement=statement)
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User {username} not found",
+            )
+        return user
+    except SQLAlchemyError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error"
+        )
 
 
 async def authenticate_user(
