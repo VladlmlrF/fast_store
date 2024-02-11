@@ -1,5 +1,9 @@
+from pathlib import Path
+
 from pydantic_settings import BaseSettings
 from pydantic_settings import SettingsConfigDict
+
+BASE_DIR = Path(__file__).parent.parent.parent.parent.parent
 
 
 class Settings(BaseSettings):
@@ -8,6 +12,11 @@ class Settings(BaseSettings):
     DB_NAME: str
     DB_USER: str
     DB_PASS: str
+
+    private_key_path: Path = BASE_DIR / "certs" / "private.pem"
+    public_key_path: Path = BASE_DIR / "certs" / "public.pem"
+    algorithm: str = "RS256"
+    access_token_expire_minutes: int = 15
 
     model_config = SettingsConfigDict(env_file=".env")
 
