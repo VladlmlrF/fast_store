@@ -159,4 +159,5 @@ cython_debug/
 .idea/
 /.env
 /certs/
-/src/backend/app/certs/
+/certs/
+/src/backend/.env
