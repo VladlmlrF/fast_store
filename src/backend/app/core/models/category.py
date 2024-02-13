@@ -10,5 +10,5 @@ if TYPE_CHECKING:
 
 
 class Category(Base, table=True):
-    name: str = Field(index=True)
+    name: str = Field(unique=True, index=True)
     products: list["Product"] = Relationship(back_populates="category")
