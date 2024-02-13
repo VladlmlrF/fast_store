@@ -20,7 +20,6 @@ from sqlmodel import select
 from src.backend.app.core.config import settings
 from src.backend.app.core.models import User
 
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
@@ -131,33 +130,10 @@ async def authenticate_user(
     return user
 
 
-async def get_current_user(
-    session: AsyncSession,
-    token: Annotated[str, Depends(oauth2_scheme)],
-):
-    """Get current user"""
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    try:
-        payload: dict = decode_access_token(token=token)
-        username: str | None = payload.get("sub")
-        if username is None:
-            raise credentials_exception
-        user = await get_user_by_username(session, username)
-        if not user:
-            raise credentials_exception
-        return user
-    except JWTError:
-        raise credentials_exception
-
-
 async def get_current_user_name(
     token: Annotated[str, Depends(oauth2_scheme)],
 ):
-    """Get current user"""
+    """Get current user name"""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -171,3 +147,35 @@ async def get_current_user_name(
         return username
     except JWTError:
         raise credentials_exception
+
+
+async def super_admin_required(
+    session: AsyncSession,
+    current_user_name: str = Depends(get_current_user_name),
+) -> User:
+    current_user: User | None = await get_user_by_username(
+        session=session, username=current_user_name
+    )
+    if not current_user or not current_user.is_super_admin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied: Super admin access required",
+        )
+    return current_user
+
+
+async def admin_required(
+    session: AsyncSession,
+    current_user_name: str = Depends(get_current_user_name),
+) -> User:
+    current_user: User | None = await get_user_by_username(
+        session=session, username=current_user_name
+    )
+    if not current_user or (
+        not current_user.is_admin and not current_user.is_super_admin
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied: Admin access required",
+        )
+    return current_user
