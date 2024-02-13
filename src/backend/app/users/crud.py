@@ -133,8 +133,12 @@ async def update_user(
     user_update: UserUpdateSchema,
 ) -> User:
     """Update user"""
+    if user.role == Role.SUPER_ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="FORBIDDEN!!!"
+        )
     try:
-        for name, value in user_update.model_dump(exclude_unset=False).items():
+        for name, value in user_update.model_dump(exclude_unset=True).items():
             setattr(user, name, value)
         await session.commit()
         await session.refresh(user)
@@ -148,6 +152,10 @@ async def update_user(
 
 async def delete_user(session: AsyncSession, user: User) -> None:
     """Delete user"""
+    if user.role == Role.SUPER_ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="FORBIDDEN!!!"
+        )
     try:
         await session.delete(user)
         await session.commit()
@@ -166,6 +174,10 @@ async def change_user_activity(
     try:
         user = await get_user_by_username(session=session, username=username)
         if user:
+            if user.role == Role.SUPER_ADMIN:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN, detail="FORBIDDEN!!!"
+                )
             user.is_active = False if user.is_active else True
             await session.commit()
             await session.refresh(user)
