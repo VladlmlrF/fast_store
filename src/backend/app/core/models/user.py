@@ -31,3 +31,11 @@ class User(Base, table=True):
     profile: "Profile" = Relationship(
         back_populates="user", sa_relationship_kwargs={"uselist": False}
     )
+
+    @property
+    def is_super_admin(self) -> bool:
+        return Role.SUPER_ADMIN == self.role
+
+    @property
+    def is_admin(self) -> bool:
+        return Role.ADMIN == self.role
