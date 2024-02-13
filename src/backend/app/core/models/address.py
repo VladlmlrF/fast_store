@@ -16,4 +16,4 @@ class Address(Base, table=True):
     state: str
     postal_code: str
     country: str
-    user: "Profile" = Relationship(back_populates="addresses")
+    profile: "Profile" = Relationship(back_populates="addresses")
