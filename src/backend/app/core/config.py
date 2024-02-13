@@ -13,12 +13,12 @@ class Settings(BaseSettings):
     DB_USER: str
     DB_PASS: str
 
+    SUPER_ADMIN_PASSWORD: str
+
     private_key_path: Path = BASE_DIR / "certs" / "private.pem"
     public_key_path: Path = BASE_DIR / "certs" / "public.pem"
     algorithm: str = "RS256"
     access_token_expire_minutes: int = 15
-
-    SUPER_ADMIN_PASSWORD: str
 
     model_config = SettingsConfigDict(env_file=".env")
 
