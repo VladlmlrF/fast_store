@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from .category import Category
     from .review import Review
     from .cart import CartItem
+    from .order_product import OrderProduct
 
 
 class Product(Base, table=True):
@@ -21,3 +22,4 @@ class Product(Base, table=True):
     category: "Category" = Relationship(back_populates="products")
     reviews: list["Review"] = Relationship(back_populates="product")
     cart_items: list["CartItem"] = Relationship(back_populates="product")
+    orders: list["OrderProduct"] = Relationship(back_populates="product")
