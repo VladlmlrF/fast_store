@@ -16,4 +16,4 @@ class Order(Base, table=True):
     user: "User" = Relationship(back_populates="orders")
     products: list["OrderProduct"] = Relationship(back_populates="order")
     coupon_id: int | None = Field(default=None, foreign_key="coupon.id")
-    coupon: "Coupon | None" = Relationship(back_populates="orders")
+    coupon: "Coupon" = Relationship(back_populates="orders")
