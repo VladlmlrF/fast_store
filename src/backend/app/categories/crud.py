@@ -36,7 +36,7 @@ async def get_category_by_name(session: AsyncSession, name: str) -> Category | N
         if not category:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"User {name} not found",
+                detail=f"Category {name} not found",
             )
         return category
     except SQLAlchemyError:
