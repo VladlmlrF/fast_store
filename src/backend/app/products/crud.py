@@ -36,7 +36,7 @@ async def create_product(
 
 
 async def get_product(product_id: int, session: AsyncSession) -> Product | None:
-    """Get product by name"""
+    """Get product by id"""
     try:
         statement = select(Product).where(Product.id == product_id)
         product: Product | None = await session.scalar(statement=statement)
