@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 from src.backend.app.addresses.views import router as address_router
 from src.backend.app.auth.views import router as auth_router
+from src.backend.app.cart_items.views import router as cart_item_router
 from src.backend.app.carts.views import router as cart_router
 from src.backend.app.categories.views import router as category_router
 from src.backend.app.products.views import router as product_router
@@ -24,6 +25,7 @@ app.include_router(product_router, prefix="/product")
 app.include_router(address_router, prefix="/address")
 app.include_router(profile_router, prefix="/profile")
 app.include_router(cart_router, prefix="/cart")
+app.include_router(cart_item_router, prefix="/cart-item")
 
 
 if __name__ == "__main__":
