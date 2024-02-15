@@ -15,4 +15,5 @@ class Coupon(Base, table=True):
     discount: int
     valid_from: datetime
     valid_until: datetime
+    active: bool
     orders: list["Order"] = Relationship(back_populates="coupon")
