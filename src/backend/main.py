@@ -7,6 +7,7 @@ from src.backend.app.cart_items.views import router as cart_item_router
 from src.backend.app.carts.views import router as cart_router
 from src.backend.app.categories.views import router as category_router
 from src.backend.app.coupons.views import router as coupon_router
+from src.backend.app.order_products.views import router as order_product_router
 from src.backend.app.orders.views import router as order_router
 from src.backend.app.products.views import router as product_router
 from src.backend.app.profiles.views import router as profile_router
@@ -30,6 +31,7 @@ app.include_router(cart_router, prefix="/cart")
 app.include_router(cart_item_router, prefix="/cart-item")
 app.include_router(coupon_router, prefix="/coupon")
 app.include_router(order_router, prefix="/order")
+app.include_router(order_product_router, prefix="/order-product")
 
 
 if __name__ == "__main__":
