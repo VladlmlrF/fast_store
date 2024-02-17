@@ -11,6 +11,7 @@ from src.backend.app.order_products.views import router as order_product_router
 from src.backend.app.orders.views import router as order_router
 from src.backend.app.products.views import router as product_router
 from src.backend.app.profiles.views import router as profile_router
+from src.backend.app.reviews.views import router as review_router
 from src.backend.app.users.views import router as user_router
 
 app = FastAPI(title="Fast Store")
@@ -32,6 +33,7 @@ app.include_router(cart_item_router, prefix="/cart-item")
 app.include_router(coupon_router, prefix="/coupon")
 app.include_router(order_router, prefix="/order")
 app.include_router(order_product_router, prefix="/order-product")
+app.include_router(review_router, prefix="/review")
 
 
 if __name__ == "__main__":
